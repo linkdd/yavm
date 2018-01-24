@@ -13,7 +13,7 @@ int push8(instruction_t *instr, stack_t *stack)
     }
     else
     {
-        memcpy(&val, stack->base + stack->sp, sizeof(val));
+        memcpy(&val, stack->base + stack->sp - 1, sizeof(val));
     }
 
     memcpy(stack->base + stack->sp, &val, sizeof(val));
@@ -34,7 +34,7 @@ int push16(instruction_t *instr, stack_t *stack)
     }
     else
     {
-        memcpy(&val, stack->base + stack->sp, sizeof(val));
+        memcpy(&val, stack->base + stack->sp - 2, sizeof(val));
     }
 
 
@@ -56,7 +56,7 @@ int push32(instruction_t *instr, stack_t *stack)
     }
     else
     {
-        memcpy(&val, stack->base + stack->sp, sizeof(val));
+        memcpy(&val, stack->base + stack->sp - 4, sizeof(val));
     }
 
     memcpy(stack->base + stack->sp, &val, sizeof(val));
@@ -77,7 +77,7 @@ int push64(instruction_t *instr, stack_t *stack)
     }
     else
     {
-        memcpy(&val, stack->base + stack->sp, sizeof(val));
+        memcpy(&val, stack->base + stack->sp - 8, sizeof(val));
     }
 
     memcpy(stack->base + stack->sp, &val, sizeof(val));
