@@ -181,7 +181,15 @@ INT</pre>
             <li><a href="function-call.html">4 instructions dedicated to function calls</a></li>
         </ul>
 
-        <p>For more informations about the structure of the interpreter, see
-        <a href="interpreter.html">this page</a>.</p>
+        <p><b>NB:</b> When there is not enough space left on the stack, it must
+        be reallocated with more space:</p>
+
+        <ul>
+            <li>when the VM starts, the stack is allocated to 4096 bytes</li>
+            <li>before executing an instruction, if there is less than 8 bytes
+            remaining, allocate 4096 more bytes with
+            <a href="http://manpagesfr.free.fr/man/man3/malloc.3.html">realloc</a>
+            </li>
+        </ul>
     </body>
 </html>
