@@ -4,17 +4,46 @@
         <meta charset="utf-8" />
 
         <style type="text/css">
+            html {
+                background-color: #EFEFEF;
+            }
+
             body {
                 width: 90%;
-                margin: auto;
-                box-shadow: 5px 2px 2px black;
+                padding: 25px;
+                margin-left: auto;
+                margin-right: auto;
+                margin-top: 25px;
+                margin-bottom: 25px;
+                border-radius: 2px;
+                box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.24);
+            }
+
+            h1 {
+                text-align: center;
+            }
+
+            pre {
+                background-color: #EFEFEF;
+                color: red;
+            }
+
+            pre.code {
+                padding: 5px;
+                border-radius: 2px;
+                box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.24);
             }
 
             table {
                 width: 100%;
                 border-collapse: collapse;
-                border: 1px solid black;
                 text-align: center;
+                border-radius: 2px;
+                box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.24);1
+            }
+
+            tr, th, td {
+                border: 1px solid black;
             }
         </style>
     </head>
@@ -40,7 +69,7 @@
         <p><b>NB:</b> each instruction can have inline parameters, to avoid pushing
         on the stack.</p>
 
-        <pre>PUSH8 42
+        <pre class="code">PUSH8 42
 NOT8
 PUSH8 1
 INT</pre>
