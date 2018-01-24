@@ -1,0 +1,42 @@
+<html>
+    <head>
+        <title>YAVM - Yet Another Virtual Machine - Stack Instructions</title>
+        <meta charset="utf-8" />
+        <link rel="stylesheet" media="all" href="style.css" />
+    </head>
+    <body>
+        <h1>Yet Another Virtual Machine - Stack Instructions</h1>
+
+        <h2>PUSH8, PUSH16, PUSH32, PUSH64</h2>
+
+        <ul>
+            <li>If the flag <code>has operand</code> is set:
+                <ul>
+                    <li>read <a href="#pushX">X</a> byte(s) following the instruction</li>
+                    <li>increment the value of the <code>IP</code> register by <a href="#pushX">X</a></li>
+                    <li>copy the bytes at the address <code>SB + SP</code> where
+                    <code>SB</code> is the address of the stack base, and <code>SP</code>
+                    the stack pointer register</li>
+                    <li>increment the value of the <code>SP</code> register by <a href="#pushX">X</a></li>
+                </ul>
+            </li>
+            <li>Else:
+                <ul>
+                    <li>read <a href="#pushX">X</a> byte(s) at the address <code>SB + SP - <a href="#pushX">X</a></code></li>
+                    <li>copy the bytes at the address <code>SB + SP</code></li>
+                    <li>increment the value of the <code>SP</code> register by <a href="#pushX">X</a></li>
+                </ul>
+            </li>
+        </ul>
+
+        <table id="pushX">
+            <tr><th>Instruction</th><th>Value for X</th></tr>
+            <tr><td>PUSH8</td><td>1</td></tr>
+            <tr><td>PUSH16</td><td>2</td></tr>
+            <tr><td>PUSH32</td><td>4</td></tr>
+            <tr><td>PUSH64</td><td>8</td></tr>
+        </table>
+
+        <p><a href="https://github.com/linkdd/yavm/blob/master/src/stack/push.c">Source code</a></p>
+    </body>
+</html>
