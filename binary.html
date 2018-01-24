@@ -1,0 +1,586 @@
+<html>
+    <head>
+        <title>YAVM - Yet Another Virtual Machine - Binary Arithmetic Instructions</title>
+        <meta charset="utf-8" />
+        <link rel="stylesheet" media="all" href="style.css" />
+    </head>
+    <body>
+        <h1>Yet Another Virtual Machine - Binary Arithmetic Instructions</h1>
+
+        <p><a href="index.html">Back to index</a></p>
+
+        <h2>XOR8, XOR16, XOR32, XOR64</h2>
+
+        <div style="display: flex;">
+            <div style="flex: 3">
+                <p><b>OPCODE:</b> <code>00100</code></p>
+
+                <ul>
+                    <li>If the flag <code>has operand</code> is set:
+                        <ul>
+                            <li>read two times <a href="#xorX">X</a> byte(s) following the instruction</li>
+                            <li>increment the value of the <code>IP</code> register by <code> 2 * <a href="#xorX">X</a></code></li>
+                        </ul>
+                    </li>
+                    <li>Else:
+                        <ul>
+                            <li>read two times <a href="#xorX">X</a> byte(s) at the address <code>SB + SP - 2 * <a href="#xorX">X</a></code></li>
+                            <li>decrement the value of the <code>SP</code> register by <code>2 * <a href="#xorX">X</a></code></li>
+                        </ul>
+                    </li>
+                    <li>calculate <code>value1 XOR value2</code></li>
+                    <li>copy the <a href="#xorX">X</a> bytes of the result at the address <code>SB + SP</code> where
+                    <code>SB</code> is the address of the stack base, and <code>SP</code>
+                    the stack pointer register</li>
+                    <li>increment the value of the <code>SP</code> register by <a href="#xorX">X</a></li>
+                </ul>
+
+                <table id="xorX">
+                    <tr><th>Instruction</th><th>Value for X</th></tr>
+                    <tr><td>XOR8</td><td>1</td></tr>
+                    <tr><td>XOR16</td><td>2</td></tr>
+                    <tr><td>XOR32</td><td>4</td></tr>
+                    <tr><td>XOR64</td><td>8</td></tr>
+                </table>
+            </div>
+            <div style="flex: 1;">
+                <pre>XOR8 0xF0 0x0F</pre>
+
+                <p style="text-align: center; font-size: 48px;">&#8681;</p>
+
+                <table style="width: 100%;"><tr><td>XOR8 (<code>1 00100 00</code>)</td><td>0xF0</td><td>0x0F</td></tr></table>
+
+                <p style="text-align: center; font-size: 48px;">&#8681;</p>
+
+                <table style="width: 100%;">
+                    <tr><th>STACK HEAD (<code>SP = 1</code>)</th></tr>
+                    <tr><td>0xFF</td></tr>
+                    <tr><th>STACK BASE</th></tr>
+                </table>
+            </div>
+        </div>
+
+        <p style="text-align: center;">
+            <a href="https://github.com/linkdd/yavm/blob/master/src/binary/xor.c">Source code</a>
+        </p>
+
+        <h2>OR8, OR16, OR32, OR64</h2>
+
+        <div style="display: flex;">
+            <div style="flex: 3">
+                <p><b>OPCODE:</b> <code>00101</code></p>
+
+                <ul>
+                    <li>If the flag <code>has operand</code> is set:
+                        <ul>
+                            <li>read two times <a href="#orX">X</a> byte(s) following the instruction</li>
+                            <li>increment the value of the <code>IP</code> register by <code> 2 * <a href="#orX">X</a></code></li>
+                        </ul>
+                    </li>
+                    <li>Else:
+                        <ul>
+                            <li>read two times <a href="#orX">X</a> byte(s) at the address <code>SB + SP - 2 * <a href="#orX">X</a></code></li>
+                            <li>decrement the value of the <code>SP</code> register by <code>2 * <a href="#orX">X</a></code></li>
+                        </ul>
+                    </li>
+                    <li>calculate <code>value1 OR value2</code></li>
+                    <li>copy the <a href="#orX">X</a> bytes of the result at the address <code>SB + SP</code> where
+                    <code>SB</code> is the address of the stack base, and <code>SP</code>
+                    the stack pointer register</li>
+                    <li>increment the value of the <code>SP</code> register by <a href="#orX">X</a></li>
+                </ul>
+
+                <table id="orX">
+                    <tr><th>Instruction</th><th>Value for X</th></tr>
+                    <tr><td>OR8</td><td>1</td></tr>
+                    <tr><td>OR16</td><td>2</td></tr>
+                    <tr><td>OR32</td><td>4</td></tr>
+                    <tr><td>OR64</td><td>8</td></tr>
+                </table>
+            </div>
+            <div style="flex: 1;">
+                <pre>OR8 0xF0 0x00</pre>
+
+                <p style="text-align: center; font-size: 48px;">&#8681;</p>
+
+                <table style="width: 100%;"><tr><td>OR8 (<code>1 00101 00</code>)</td><td>0xF0</td><td>0x00</td></tr></table>
+
+                <p style="text-align: center; font-size: 48px;">&#8681;</p>
+
+                <table style="width: 100%;">
+                    <tr><th>STACK HEAD (<code>SP = 1</code>)</th></tr>
+                    <tr><td>0xF0</td></tr>
+                    <tr><th>STACK BASE</th></tr>
+                </table>
+            </div>
+        </div>
+
+        <p style="text-align: center;">
+            <a href="https://github.com/linkdd/yavm/blob/master/src/binary/or.c">Source code</a>
+        </p>
+
+        <h2>NOR8, NOR16, NOR32, NOR64</h2>
+
+        <div style="display: flex;">
+            <div style="flex: 3">
+                <p><b>OPCODE:</b> <code>00110</code></p>
+
+                <ul>
+                    <li>If the flag <code>has operand</code> is set:
+                        <ul>
+                            <li>read two times <a href="#norX">X</a> byte(s) following the instruction</li>
+                            <li>increment the value of the <code>IP</code> register by <code> 2 * <a href="#norX">X</a></code></li>
+                        </ul>
+                    </li>
+                    <li>Else:
+                        <ul>
+                            <li>read two times <a href="#norX">X</a> byte(s) at the address <code>SB + SP - 2 * <a href="#norX">X</a></code></li>
+                            <li>decrement the value of the <code>SP</code> register by <code>2 * <a href="#norX">X</a></code></li>
+                        </ul>
+                    </li>
+                    <li>calculate <code>NOT (value1 OR value2)</code></li>
+                    <li>copy the <a href="#norX">X</a> bytes of the result at the address <code>SB + SP</code> where
+                    <code>SB</code> is the address of the stack base, and <code>SP</code>
+                    the stack pointer register</li>
+                    <li>increment the value of the <code>SP</code> register by <a href="#norX">X</a></li>
+                </ul>
+
+                <table id="norX">
+                    <tr><th>Instruction</th><th>Value for X</th></tr>
+                    <tr><td>NOR8</td><td>1</td></tr>
+                    <tr><td>NOR16</td><td>2</td></tr>
+                    <tr><td>NOR32</td><td>4</td></tr>
+                    <tr><td>NOR64</td><td>8</td></tr>
+                </table>
+            </div>
+            <div style="flex: 1;">
+                <pre>NOR8 0xF0 0x00</pre>
+
+                <p style="text-align: center; font-size: 48px;">&#8681;</p>
+
+                <table style="width: 100%;"><tr><td>NOR8 (<code>1 00110 00</code>)</td><td>0xF0</td><td>0x00</td></tr></table>
+
+                <p style="text-align: center; font-size: 48px;">&#8681;</p>
+
+                <table style="width: 100%;">
+                    <tr><th>STACK HEAD (<code>SP = 1</code>)</th></tr>
+                    <tr><td>0x0F</td></tr>
+                    <tr><th>STACK BASE</th></tr>
+                </table>
+            </div>
+        </div>
+
+        <p style="text-align: center;">
+            <a href="https://github.com/linkdd/yavm/blob/master/src/binary/nor.c">Source code</a>
+        </p>
+
+        <h2>AND8, AND16, AND32, AND64</h2>
+
+        <div style="display: flex;">
+            <div style="flex: 3">
+                <p><b>OPCODE:</b> <code>00111</code></p>
+
+                <ul>
+                    <li>If the flag <code>has operand</code> is set:
+                        <ul>
+                            <li>read two times <a href="#andX">X</a> byte(s) following the instruction</li>
+                            <li>increment the value of the <code>IP</code> register by <code> 2 * <a href="#andX">X</a></code></li>
+                        </ul>
+                    </li>
+                    <li>Else:
+                        <ul>
+                            <li>read two times <a href="#andX">X</a> byte(s) at the address <code>SB + SP - 2 * <a href="#andX">X</a></code></li>
+                            <li>decrement the value of the <code>SP</code> register by <code>2 * <a href="#andX">X</a></code></li>
+                        </ul>
+                    </li>
+                    <li>calculate <code>value1 AND value2</code></li>
+                    <li>copy the <a href="#andX">X</a> bytes of the result at the address <code>SB + SP</code> where
+                    <code>SB</code> is the address of the stack base, and <code>SP</code>
+                    the stack pointer register</li>
+                    <li>increment the value of the <code>SP</code> register by <a href="#andX">X</a></li>
+                </ul>
+
+                <table id="andX">
+                    <tr><th>Instruction</th><th>Value for X</th></tr>
+                    <tr><td>AND8</td><td>1</td></tr>
+                    <tr><td>AND16</td><td>2</td></tr>
+                    <tr><td>AND32</td><td>4</td></tr>
+                    <tr><td>AND64</td><td>8</td></tr>
+                </table>
+            </div>
+            <div style="flex: 1;">
+                <pre>AND8 0xA0 0xFF</pre>
+
+                <p style="text-align: center; font-size: 48px;">&#8681;</p>
+
+                <table style="width: 100%;"><tr><td>AND8 (<code>1 00111 00</code>)</td><td>0xA0</td><td>0xFF</td></tr></table>
+
+                <p style="text-align: center; font-size: 48px;">&#8681;</p>
+
+                <table style="width: 100%;">
+                    <tr><th>STACK HEAD (<code>SP = 1</code>)</th></tr>
+                    <tr><td>0xA0</td></tr>
+                    <tr><th>STACK BASE</th></tr>
+                </table>
+            </div>
+        </div>
+
+        <p style="text-align: center;">
+            <a href="https://github.com/linkdd/yavm/blob/master/src/binary/and.c">Source code</a>
+        </p>
+
+        <h2>NAND8, NAND16, NAND32, NAND64</h2>
+
+        <div style="display: flex;">
+            <div style="flex: 3">
+                <p><b>OPCODE:</b> <code>001000</code></p>
+
+                <ul>
+                    <li>If the flag <code>has operand</code> is set:
+                        <ul>
+                            <li>read two times <a href="#nandX">X</a> byte(s) following the instruction</li>
+                            <li>increment the value of the <code>IP</code> register by <code> 2 * <a href="#nandX">X</a></code></li>
+                        </ul>
+                    </li>
+                    <li>Else:
+                        <ul>
+                            <li>read two times <a href="#nandX">X</a> byte(s) at the address <code>SB + SP - 2 * <a href="#nandX">X</a></code></li>
+                            <li>decrement the value of the <code>SP</code> register by <code>2 * <a href="#nandX">X</a></code></li>
+                        </ul>
+                    </li>
+                    <li>calculate <code>NOT (value1 AND value2)</code></li>
+                    <li>copy the <a href="#nandX">X</a> bytes of the result at the address <code>SB + SP</code> where
+                    <code>SB</code> is the address of the stack base, and <code>SP</code>
+                    the stack pointer register</li>
+                    <li>increment the value of the <code>SP</code> register by <a href="#nandX">X</a></li>
+                </ul>
+
+                <table id="nandX">
+                    <tr><th>Instruction</th><th>Value for X</th></tr>
+                    <tr><td>NAND8</td><td>1</td></tr>
+                    <tr><td>NAND16</td><td>2</td></tr>
+                    <tr><td>NAND32</td><td>4</td></tr>
+                    <tr><td>NAND64</td><td>8</td></tr>
+                </table>
+            </div>
+            <div style="flex: 1;">
+                <pre>NAND8 0xA0 0xFF</pre>
+
+                <p style="text-align: center; font-size: 48px;">&#8681;</p>
+
+                <table style="width: 100%;"><tr><td>AND8 (<code>1 01000 00</code>)</td><td>0xA0</td><td>0xFF</td></tr></table>
+
+                <p style="text-align: center; font-size: 48px;">&#8681;</p>
+
+                <table style="width: 100%;">
+                    <tr><th>STACK HEAD (<code>SP = 1</code>)</th></tr>
+                    <tr><td>0x5F</td></tr>
+                    <tr><th>STACK BASE</th></tr>
+                </table>
+            </div>
+        </div>
+
+        <p style="text-align: center;">
+            <a href="https://github.com/linkdd/yavm/blob/master/src/binary/nand.c">Source code</a>
+        </p>
+
+        <h2>NOT8, NOT16, NOT32, NOT64</h2>
+
+        <div style="display: flex;">
+            <div style="flex: 3">
+                <p><b>OPCODE:</b> <code>01001</code></p>
+
+                <ul>
+                    <li>If the flag <code>has operand</code> is set:
+                        <ul>
+                            <li>read <a href="#notX">X</a> byte(s) following the instruction</li>
+                            <li>increment the value of the <code>IP</code> register by <a href="#notX">X</a></li>
+                        </ul>
+                    </li>
+                    <li>Else:
+                        <ul>
+                            <li>read times <a href="#not">X</a> byte(s) at the address <code>SB + SP - <a href="#andX">X</a></code></li>
+                            <li>decrement the value of the <code>SP</code> register by <a href="#andX">X</a></li>
+                        </ul>
+                    </li>
+                    <li>calculate <code>NOT value</code></li>
+                    <li>copy the <a href="#notX">X</a> bytes of the result at the address <code>SB + SP</code> where
+                    <code>SB</code> is the address of the stack base, and <code>SP</code>
+                    the stack pointer register</li>
+                    <li>increment the value of the <code>SP</code> register by <a href="#notX">X</a></li>
+                </ul>
+
+                <table id="notX">
+                    <tr><th>Instruction</th><th>Value for X</th></tr>
+                    <tr><td>NOT8</td><td>1</td></tr>
+                    <tr><td>NOT16</td><td>2</td></tr>
+                    <tr><td>NOT32</td><td>4</td></tr>
+                    <tr><td>NOT64</td><td>8</td></tr>
+                </table>
+            </div>
+            <div style="flex: 1;">
+                <pre>NOT8 0xF0</pre>
+
+                <p style="text-align: center; font-size: 48px;">&#8681;</p>
+
+                <table style="width: 100%;"><tr><td>NOT8 (<code>1 01001 00</code>)</td><td>0xF0</td></tr></table>
+
+                <p style="text-align: center; font-size: 48px;">&#8681;</p>
+
+                <table style="width: 100%;">
+                    <tr><th>STACK HEAD (<code>SP = 1</code>)</th></tr>
+                    <tr><td>0x0F</td></tr>
+                    <tr><th>STACK BASE</th></tr>
+                </table>
+            </div>
+        </div>
+
+        <p style="text-align: center;">
+            <a href="https://github.com/linkdd/yavm/blob/master/src/binary/not.c">Source code</a>
+        </p>
+
+        <h2>LSHIFT8, LSHIFT16, LSHIFT32, LSHIFT64</h2>
+
+        <div style="display: flex;">
+            <div style="flex: 3">
+                <p><b>OPCODE:</b> <code>01010</code></p>
+
+                <ul>
+                    <li>If the flag <code>has operand</code> is set:
+                        <ul>
+                            <li>read <a href="#lshiftX">X</a> byte(s) following the instruction</li>
+                            <li>read 1 byte following the previous read bytes</li>
+                            <li>increment the value of the <code>IP</code> register by <code> 1 + <a href="#lshiftX">X</a></code></li>
+                        </ul>
+                    </li>
+                    <li>Else:
+                        <ul>
+                            <li>read <a href="#lshiftX">X</a> byte(s) at the address <code>SB + SP - <a href="#lshiftX">X</a></code></li>
+                            <li>read 1 byte at the address <code>SB + SP - 1 - <a href="#lshiftX">X</a></code></li>
+                            <li>decrement the value of the <code>SP</code> register by <code>1 + <a href="#lshiftX">X</a></code></li>
+                        </ul>
+                    </li>
+                    <li>the <a href="#lshiftX">X</a> bytes are the value</li>
+                    <li>the single byte is the number of bits to shift</li>
+                    <li>calculate <code>value << bits</code></li>
+                    <li>copy the <a href="#lshiftX">X</a> bytes of the result at the address <code>SB + SP</code> where
+                    <code>SB</code> is the address of the stack base, and <code>SP</code>
+                    the stack pointer register</li>
+                    <li>increment the value of the <code>SP</code> register by <a href="#lshiftX">X</a></li>
+                </ul>
+
+                <table id="lshiftX">
+                    <tr><th>Instruction</th><th>Value for X</th></tr>
+                    <tr><td>LSHIFT8</td><td>1</td></tr>
+                    <tr><td>LSHIFT16</td><td>2</td></tr>
+                    <tr><td>LSHIFT32</td><td>4</td></tr>
+                    <tr><td>LSHIFT64</td><td>8</td></tr>
+                </table>
+            </div>
+            <div style="flex: 1;">
+                <pre>LSHIFT8 0x0F 4</pre>
+
+                <p style="text-align: center; font-size: 48px;">&#8681;</p>
+
+                <table style="width: 100%;"><tr><td>LSHIFT8 (<code>1 01010 00</code>)</td><td>0x0F</td><td>4</td></tr></table>
+
+                <p style="text-align: center; font-size: 48px;">&#8681;</p>
+
+                <table style="width: 100%;">
+                    <tr><th>STACK HEAD (<code>SP = 1</code>)</th></tr>
+                    <tr><td>0xF0</td></tr>
+                    <tr><th>STACK BASE</th></tr>
+                </table>
+            </div>
+        </div>
+
+        <p style="text-align: center;">
+            <a href="https://github.com/linkdd/yavm/blob/master/src/binary/lshift.c">Source code</a>
+        </p>
+
+        <h2>RSHIFT8, RSHIFT16, RSHIFT32, RSHIFT64</h2>
+
+        <div style="display: flex;">
+            <div style="flex: 3">
+                <p><b>OPCODE:</b> <code>01011</code></p>
+
+                <ul>
+                    <li>If the flag <code>has operand</code> is set:
+                        <ul>
+                            <li>read <a href="#rshiftX">X</a> byte(s) following the instruction</li>
+                            <li>read 1 byte following the previous read bytes</li>
+                            <li>increment the value of the <code>IP</code> register by <code> 1 + <a href="#rshiftX">X</a></code></li>
+                        </ul>
+                    </li>
+                    <li>Else:
+                        <ul>
+                            <li>read <a href="#rshiftX">X</a> byte(s) at the address <code>SB + SP - <a href="#rshiftX">X</a></code></li>
+                            <li>read 1 byte at the address <code>SB + SP - 1 - <a href="#rshiftX">X</a></code></li>
+                            <li>decrement the value of the <code>SP</code> register by <code>1 + <a href="#rshiftX">X</a></code></li>
+                        </ul>
+                    </li>
+                    <li>the <a href="#rshiftX">X</a> bytes are the value</li>
+                    <li>the single byte is the number of bits to shift</li>
+                    <li>calculate <code>value >> bits</code></li>
+                    <li>copy the <a href="#rshiftX">X</a> bytes of the result at the address <code>SB + SP</code> where
+                    <code>SB</code> is the address of the stack base, and <code>SP</code>
+                    the stack pointer register</li>
+                    <li>increment the value of the <code>SP</code> register by <a href="#rshiftX">X</a></li>
+                </ul>
+
+                <table id="rshiftX">
+                    <tr><th>Instruction</th><th>Value for X</th></tr>
+                    <tr><td>RSHIFT8</td><td>1</td></tr>
+                    <tr><td>RSHIFT16</td><td>2</td></tr>
+                    <tr><td>RSHIFT32</td><td>4</td></tr>
+                    <tr><td>RSHIFT64</td><td>8</td></tr>
+                </table>
+            </div>
+            <div style="flex: 1;">
+                <pre>RSHIFT8 0xF0 4</pre>
+
+                <p style="text-align: center; font-size: 48px;">&#8681;</p>
+
+                <table style="width: 100%;"><tr><td>LSHIFT8 (<code>1 01011 00</code>)</td><td>0xF0</td><td>4</td></tr></table>
+
+                <p style="text-align: center; font-size: 48px;">&#8681;</p>
+
+                <table style="width: 100%;">
+                    <tr><th>STACK HEAD (<code>SP = 1</code>)</th></tr>
+                    <tr><td>0x0F</td></tr>
+                    <tr><th>STACK BASE</th></tr>
+                </table>
+            </div>
+        </div>
+
+        <p style="text-align: center;">
+            <a href="https://github.com/linkdd/yavm/blob/master/src/binary/rshift.c">Source code</a>
+        </p>
+
+        <h2>ROL8, ROL16, ROL32, ROL64</h2>
+
+        <div style="display: flex;">
+            <div style="flex: 3">
+                <p><b>OPCODE:</b> <code>01100</code></p>
+
+                <ul>
+                    <li>If the flag <code>has operand</code> is set:
+                        <ul>
+                            <li>read <a href="#rolX">X</a> byte(s) following the instruction</li>
+                            <li>read 1 byte following the previous read bytes</li>
+                            <li>increment the value of the <code>IP</code> register by <code> 1 + <a href="#rolX">X</a></code></li>
+                        </ul>
+                    </li>
+                    <li>Else:
+                        <ul>
+                            <li>read <a href="#rolX">X</a> byte(s) at the address <code>SB + SP - <a href="#rolX">X</a></code></li>
+                            <li>read 1 byte at the address <code>SB + SP - 1 - <a href="#rolX">X</a></code></li>
+                            <li>decrement the value of the <code>SP</code> register by <code>1 + <a href="#rolX">X</a></code></li>
+                        </ul>
+                    </li>
+                    <li>the <a href="#rolX">X</a> bytes are the value</li>
+                    <li>the single byte is the number of bits to shift</li>
+                    <li>calculate: <pre class="code">shifted = value << bits
+rot_bits = val >> (<a href="#rolX">X</a> - bits)
+result = shifted | bits</pre></li>
+                    <li>copy the <a href="#rolX">X</a> bytes of the result at the address <code>SB + SP</code> where
+                    <code>SB</code> is the address of the stack base, and <code>SP</code>
+                    the stack pointer register</li>
+                    <li>increment the value of the <code>SP</code> register by <a href="#rolX">X</a></li>
+                </ul>
+
+                <table id="rolX">
+                    <tr><th>Instruction</th><th>Value for X</th></tr>
+                    <tr><td>ROL8</td><td>1</td></tr>
+                    <tr><td>ROL16</td><td>2</td></tr>
+                    <tr><td>ROL32</td><td>4</td></tr>
+                    <tr><td>ROL64</td><td>8</td></tr>
+                </table>
+            </div>
+            <div style="flex: 1;">
+                <pre>ROL8 0xF0 4</pre>
+
+                <p style="text-align: center; font-size: 48px;">&#8681;</p>
+
+                <table style="width: 100%;"><tr><td>ROL8 (<code>1 01100 00</code>)</td><td>0xF0</td><td>4</td></tr></table>
+
+                <p style="text-align: center; font-size: 48px;">&#8681;</p>
+
+                <table style="width: 100%;">
+                    <tr><th>STACK HEAD (<code>SP = 1</code>)</th></tr>
+                    <tr><td>0x0F</td></tr>
+                    <tr><th>STACK BASE</th></tr>
+                </table>
+            </div>
+        </div>
+
+        <p style="text-align: center;">
+            <a href="https://github.com/linkdd/yavm/blob/master/src/binary/rol.c">Source code</a>
+        </p>
+
+        <h2>ROR8, ROR16, ROR32, ROR64</h2>
+
+        <div style="display: flex;">
+            <div style="flex: 3">
+                <p><b>OPCODE:</b> <code>01101</code></p>
+
+                <ul>
+                    <li>If the flag <code>has operand</code> is set:
+                        <ul>
+                            <li>read <a href="#rorX">X</a> byte(s) following the instruction</li>
+                            <li>read 1 byte following the previous read bytes</li>
+                            <li>increment the value of the <code>IP</code> register by <code> 1 + <a href="#rorX">X</a></code></li>
+                        </ul>
+                    </li>
+                    <li>Else:
+                        <ul>
+                            <li>read <a href="#rorX">X</a> byte(s) at the address <code>SB + SP - <a href="#rorX">X</a></code></li>
+                            <li>read 1 byte at the address <code>SB + SP - 1 - <a href="#rorX">X</a></code></li>
+                            <li>decrement the value of the <code>SP</code> register by <code>1 + <a href="#rorX">X</a></code></li>
+                        </ul>
+                    </li>
+                    <li>the <a href="#rorX">X</a> bytes are the value</li>
+                    <li>the single byte is the number of bits to shift</li>
+                    <li>calculate: <pre class="code">shifted = value >> bits
+rot_bits = val << (<a href="#rorX">X</a> - bits)
+result = shifted | bits</pre></li>
+                    <li>copy the <a href="#rorX">X</a> bytes of the result at the address <code>SB + SP</code> where
+                    <code>SB</code> is the address of the stack base, and <code>SP</code>
+                    the stack pointer register</li>
+                    <li>increment the value of the <code>SP</code> register by <a href="#rorX">X</a></li>
+                </ul>
+
+                <table id="rorX">
+                    <tr><th>Instruction</th><th>Value for X</th></tr>
+                    <tr><td>ROR8</td><td>1</td></tr>
+                    <tr><td>ROR16</td><td>2</td></tr>
+                    <tr><td>ROR32</td><td>4</td></tr>
+                    <tr><td>ROR64</td><td>8</td></tr>
+                </table>
+            </div>
+            <div style="flex: 1;">
+                <pre>ROR8 0x0F 4</pre>
+
+                <p style="text-align: center; font-size: 48px;">&#8681;</p>
+
+                <table style="width: 100%;"><tr><td>ROR8 (<code>1 01101 00</code>)</td><td>0x0F</td><td>4</td></tr></table>
+
+                <p style="text-align: center; font-size: 48px;">&#8681;</p>
+
+                <table style="width: 100%;">
+                    <tr><th>STACK HEAD (<code>SP = 1</code>)</th></tr>
+                    <tr><td>0xF0</td></tr>
+                    <tr><th>STACK BASE</th></tr>
+                </table>
+            </div>
+        </div>
+
+        <p style="text-align: center;">
+            <a href="https://github.com/linkdd/yavm/blob/master/src/binary/ror.c">Source code</a>
+        </p>
+
+        <h2></h2>
+
+        <p><a href="index.html">Back to index</a></p>
+    </body>
+</html>

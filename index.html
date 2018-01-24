@@ -15,48 +15,58 @@
             <li>an interpreter</li>
         </ul>
 
-        <p>Each instruction uses the stack:</p>
+        <h2>Description</h2>
+
+        <p>The interpreter works with:</p>
 
         <ul>
-            <li>instruction parameters are pushed onto the stack</li>
-            <li>parameters are poped from the stack</li>
-            <li>result is then pushed on the stack</li>
+            <li>an extensible byte array that will be used as a stack</li>
+            <li>a static byte array containing the program to execute</li>
+            <li>a stack pointer register</li>
+            <li>an instruction pointer register</li>
         </ul>
 
-        <p><b>NB:</b> each instruction can have inline parameters, to avoid pushing
-        on the stack.</p>
+        <p>The following structures are needed:</p>
 
-        <pre class="code">PUSH8 42
-NOT8
-PUSH8 1
-INT</pre>
+        <ul>
+            <li>VM (<a href="https://github.com/linkdd/yavm/blob/master/include/yavm/vm.h#L20-27">source code</a>):
+            <ul>
+                <li>A stack</li>
+                <li>A program</li>
+                <li>A boolean indicating that the VM is running or not</li>
+                <li>A integer containing the exit value of the program</li>
+            </ul>
+            </li>
+            <li>Program (<a href="https://github.com/linkdd/yavm/blob/master/include/yavm/vm.h#L12-">source code</a>):
+            <ul>
+                <li>A byte array containing the code</li>
+                <li>An integer containing the size of the byte array</li>
+                <li>An integer containing the value of the instruction pointer register</li>
+            </ul>
+            </li>
+            <li>Stack (<a href="https://github.com/linkdd/yavm/blob/master/include/yavm/stack.h">source code</a>):
+            <ul>
+                <li>A byte array containing the stack</li>
+                <li>An integer containing the size of the byte array</li>
+                <li>An integer containing the value of the stack pointer register</li>
+            </ul>
+            </li>
+        </ul>
 
-        <p>The above code push 42 on the stack, then apply a binary not on this
-        value, and calls the interuption number 1 (interuptions are special
-        functions built in the interpreter), which prints the stack head.</p>
-
-        <p>It is translated in the following byte array:</p>
-        <table>
-            <tr>
-                <td>PUSH8</td>
-                <td>42</td>
-                <td>NOT8</td>
-                <td>PUSH8</td>
-                <td>1</td>
-                <td>INT</td>
-            </tr>
-        </table>
-
-        <p>Each instruction is translated into a single byte:</p>
+        <p>Each byte of the program is an instruction that has to be executed,
+        an instruction is described by the following structure:</p>
 
         <table>
             <tr><th>1 bit</th><th>5 bits</th><th>2 bits</th></tr>
             <tr><td>has operand</td><td>opcode</td><td>size</td></tr>
         </table>
 
-        <p>If the flag <code>has operand</code> is set, the parameters are stored
-        in the following bytes, if it is not set, the parameters are stored on
-        the stack.</p>
+        <p><a href="https://github.com/linkdd/yavm/blob/master/include/yavm/instruction.h">Source code</a></p>
+
+        <p>Instructions that takes parameters can have them on the stack
+        (<code>has operand = 0</code>) or in the bytes following the instruction
+        (<code>has operand = 1</code>). If the instruction produce a result, it
+        will always be pushed on the stack.
 
         <p>The <code>opcode</code> bits identifies the instruction.</p>
 
@@ -79,12 +89,49 @@ INT</pre>
             </tr>
         </table>
 
-        <p>Internally, the interpreter have 2 registers (not exposed to the user):<p>
+        <p><b>NB:</b> There are some instructions that are size independant, their
+        <code>opcode</code> is then 7 bits long.</p>
 
-        <ul>
-            <li>IP (Instruction Pointer): determines the current instruction being executed</li>
-            <li>SP (Stack Pointer): determines where to push the next value on the stack</li>
-        </ul>
+        <pre class="code">PUSH8 42
+NOT8
+PUSH8 1
+INT</pre>
+
+        <p>The above code push <code>42</code> on the stack, then apply a binary not on this
+        value, and calls the interuption number 1 (interuptions are special
+        functions built in the interpreter), which prints the stack head.</p>
+
+        <p>It is translated in the following byte array:</p>
+        <table>
+            <tr>
+                <td>PUSH8 (<code>1 00000 00</code>)</td>
+                <td>42</td>
+                <td>NOT8 (<code>0 01001 00</code>)</td>
+                <td>PUSH8 (<code>1 00000 00</code>)</td>
+                <td>1</td>
+                <td>INT (<code>0 1111110</code>)</td>
+            </tr>
+        </table>
+
+        <pre class="code">NOT8 42
+PUSH8 1
+INT</pre>
+
+        <p>The above code behave identically but we pass the parameters directly
+        instead of via the stack.</p>
+
+        <p>It is translated in the following byte array:</p>
+
+        <table>
+            <tr>
+                <td>NOT8 (<code>1 01001 00</code>)</td>
+                <td>42</td>
+                <td>INT (<code>1 1111110</code>)</td>
+                <td>1</td>
+            </tr>
+        </table>
+
+        <h2>Implementation</h2>
 
         <p><b>NB:</b> Using the C headers <code>stdlib.h</code>, <code>stdint.h</code> and <code>stdbool.h</code>,
         we have access to the following types:</p>

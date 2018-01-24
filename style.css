@@ -19,6 +19,12 @@ body {
 
 h1 {
     text-align: center;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.24);
+}
+
+h2 {
+    color: rgba(0, 0, 255, 0.24);
+    border-bottom: 1px solid rgba(0, 0, 255, 0.24);
 }
 
 pre, code {
@@ -27,14 +33,18 @@ pre, code {
     padding: 5px;
 }
 
-pre.code {
-    margin-left: 15px;
+pre {
     border-radius: 2px;
     box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.24);
     transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
-pre.code:hover {
+pre.code {
+    margin-left: 15px;
+    margin-right: 15px;
+}
+
+pre:hover {
     box-shadow: 0px 14px 28px rgba(0, 0, 0, 0.48);
 }
 
@@ -67,5 +77,4 @@ a {
 
 a:hover {
     font-weight: bold;
-    font-style: italic;
 }

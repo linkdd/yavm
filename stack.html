@@ -11,51 +11,203 @@
 
         <h2>PUSH8, PUSH16, PUSH32, PUSH64</h2>
 
-        <ul>
-            <li>If the flag <code>has operand</code> is set:
-                <ul>
-                    <li>read <a href="#pushX">X</a> byte(s) following the instruction</li>
-                    <li>increment the value of the <code>IP</code> register by <a href="#pushX">X</a></li>
-                    <li>copy the bytes at the address <code>SB + SP</code> where
-                    <code>SB</code> is the address of the stack base, and <code>SP</code>
-                    the stack pointer register</li>
-                    <li>increment the value of the <code>SP</code> register by <a href="#pushX">X</a></li>
-                </ul>
-            </li>
-            <li>Else:
-                <ul>
-                    <li>read <a href="#pushX">X</a> byte(s) at the address <code>SB + SP - <a href="#pushX">X</a></code></li>
-                    <li>copy the bytes at the address <code>SB + SP</code></li>
-                    <li>increment the value of the <code>SP</code> register by <a href="#pushX">X</a></li>
-                </ul>
-            </li>
-        </ul>
+        <div style="display: flex;">
+            <div style="flex: 3">
+                <p><b>OPCODE:</b> <code>00000</code></p>
 
-        <table id="pushX">
-            <tr><th>Instruction</th><th>Value for X</th></tr>
-            <tr><td>PUSH8</td><td>1</td></tr>
-            <tr><td>PUSH16</td><td>2</td></tr>
-            <tr><td>PUSH32</td><td>4</td></tr>
-            <tr><td>PUSH64</td><td>8</td></tr>
-        </table>
+                <ul>
+                    <li>If the flag <code>has operand</code> is set:
+                        <ul>
+                            <li>read <a href="#pushX">X</a> byte(s) following the instruction</li>
+                            <li>increment the value of the <code>IP</code> register by <a href="#pushX">X</a></li>
+                            <li>copy the bytes at the address <code>SB + SP</code> where
+                            <code>SB</code> is the address of the stack base, and <code>SP</code>
+                            the stack pointer register</li>
+                            <li>increment the value of the <code>SP</code> register by <a href="#pushX">X</a></li>
+                        </ul>
+                    </li>
+                    <li>Else:
+                        <ul>
+                            <li>read <a href="#pushX">X</a> byte(s) at the address <code>SB + SP - <a href="#pushX">X</a></code></li>
+                            <li>copy the bytes at the address <code>SB + SP</code></li>
+                            <li>increment the value of the <code>SP</code> register by <a href="#pushX">X</a></li>
+                        </ul>
+                    </li>
+                </ul>
 
-        <p><a href="https://github.com/linkdd/yavm/blob/master/src/stack/push.c">Source code</a></p>
+                <table id="pushX">
+                    <tr><th>Instruction</th><th>Value for X</th></tr>
+                    <tr><td>PUSH8</td><td>1</td></tr>
+                    <tr><td>PUSH16</td><td>2</td></tr>
+                    <tr><td>PUSH32</td><td>4</td></tr>
+                    <tr><td>PUSH64</td><td>8</td></tr>
+                </table>
+            </div>
+            <div style="flex: 1;">
+                <pre>PUSH16 0xDEAD</pre>
+
+                <p style="text-align: center; font-size: 48px;">&#8681;</p>
+
+                <table style="width: 100%;"><tr><td>PUSH16 (<code>1 00000 01</code>)</td><td>0xDE</td><td>0xAD</td></tr></table>
+
+                <p style="text-align: center; font-size: 48px;">&#8681;</p>
+
+                <table style="width: 100%;">
+                    <tr><th>STACK HEAD (<code>SP = 2</code>)</th></tr>
+                    <tr><td>0xAD</td></tr>
+                    <tr><td>0xDE</td></tr>
+                    <tr><th>STACK BASE</th></tr>
+                </table>
+            </div>
+        </div>
+
+        <p style="text-align: center;">
+            <a href="https://github.com/linkdd/yavm/blob/master/src/stack/push.c">Source code</a>
+        </p>
 
         <h2>POP8, POP16, POP32, POP64</h2>
 
-        <ul>
-            <li>decrement the value of <code>SP</code> by <a href="#popX">X</a></li>
-            <li>if the value is less than <code>0</code>, reset it to <code>0</code></li>
-        </ul>
+        <div style="display: flex;">
+            <div style="flex: 3">
+                <p><b>OPCODE:</b> <code>00001</code></p>
 
-        <table id="popX">
-            <tr><th>Instruction</th><th>Value for X</th></tr>
-            <tr><td>POP8</td><td>1</td></tr>
-            <tr><td>POP16</td><td>2</td></tr>
-            <tr><td>POP32</td><td>4</td></tr>
-            <tr><td>POP64</td><td>8</td></tr>
-        </table>
+                <ul>
+                    <li>decrement the value of <code>SP</code> by <a href="#popX">X</a></li>
+                    <li>if the value is less than <code>0</code>, reset it to <code>0</code></li>
+                </ul>
 
-        <p><a href="https://github.com/linkdd/yavm/blob/master/src/stack/pop.c">Source code</a></p>
+                <table id="popX">
+                    <tr><th>Instruction</th><th>Value for X</th></tr>
+                    <tr><td>POP8</td><td>1</td></tr>
+                    <tr><td>POP16</td><td>2</td></tr>
+                    <tr><td>POP32</td><td>4</td></tr>
+                    <tr><td>POP64</td><td>8</td></tr>
+                </table>
+            </div>
+            <div style="flex: 1;">
+                <pre>PUSH16 0xDEAD
+POP8</pre>
+
+                <p style="text-align: center; font-size: 48px;">&#8681;</p>
+
+                <table style="width: 100%;">
+                    <tr><td>PUSH16 (<code>1 00000 01</code>)</td><td>0xDE</td><td>0xAD</td></tr>
+                    <tr><td colspan="3">POP8 (<code>0 00001 00</code>)</td></tr>
+                </table>
+
+                <p style="text-align: center; font-size: 48px;">&#8681;</p>
+
+                <table style="width: 100%;">
+                    <tr><th>STACK HEAD (<code>SP = 1</code>)</th></tr>
+                    <tr><td>0xDE</td></tr>
+                    <tr><th>STACK BASE</th></tr>
+                </table>
+            </div>
+        </div>
+
+        <p style="text-align: center;">
+            <a href="https://github.com/linkdd/yavm/blob/master/src/stack/pop.c">Source code</a>
+        </p>
+
+        <h2>SWAP8, SWAP16, SWAP32, SWAP64</h2>
+
+        <div style="display: flex;">
+            <div style="flex: 3">
+                <p><b>OPCODE:</b> <code>00010</code></p>
+
+                <ul>
+                    <li>swap the two last <a href="#swapX">X</a> bytes of the stack</li>
+                </ul>
+
+                <table id="swapX">
+                    <tr><th>Instruction</th><th>Value for X</th></tr>
+                    <tr><td>SWAP8</td><td>1</td></tr>
+                    <tr><td>SWAP16</td><td>2</td></tr>
+                    <tr><td>SWAP32</td><td>4</td></tr>
+                    <tr><td>SWAP64</td><td>8</td></tr>
+                </table>
+            </div>
+            <div style="flex: 1;">
+                <pre>PUSH16 0xDEAD
+PUSH16 0xBEEF
+SWAP16</pre>
+
+                <p style="text-align: center; font-size: 48px;">&#8681;</p>
+
+                <table style="width: 100%;">
+                    <tr><td>PUSH16 (<code>1 00000 01</code>)</td><td>0xDE</td><td>0xAD</td></tr>
+                    <tr><td>PUSH16 (<code>1 00000 01</code>)</td><td>0xBE</td><td>0xEF</td></tr>
+                    <tr><td colspan="3">SWAP16 (<code>0 00010 01</code>)</td></tr>
+                </table>
+
+                <p style="text-align: center; font-size: 48px;">&#8681;</p>
+
+                <table style="width: 100%;">
+                    <tr><th>STACK HEAD (<code>SP = 4</code>)</th></tr>
+                    <tr><td>0xAD</td></tr>
+                    <tr><td>0xDE</td></tr>
+                    <tr><td>0xEF</td></tr>
+                    <tr><td>0xBE</td></tr>
+                    <tr><th>STACK BASE</th></tr>
+                </table>
+            </div>
+        </div>
+
+        <p style="text-align: center;">
+            <a href="https://github.com/linkdd/yavm/blob/master/src/stack/swap.c">Source code</a>
+        </p>
+
+        <h2>TUCK8, TUCK16, TUCK32, TUCK64</h2>
+
+        <div style="display: flex;">
+            <div style="flex: 3">
+                <p><b>OPCODE:</b> <code>00011</code></p>
+
+                <ul>
+                    <li>pop the two last <a href="#tuckX">X</a> bytes from the stack</li>
+                    <li>push the last <a href="#tuckX">X</a> bytes on the stack</li>
+                    <li>push the second last <a href="#tuckX">X</a> on the stack</li>
+                    <li>push the last <a href="#tuckX">X</a> bytes on the stack</li>
+                    <li>increment the value of <code>SP</code> register by <a href="#tuckX">X</a></li>
+                </ul>
+
+                <table id="tuckX">
+                    <tr><th>Instruction</th><th>Value for X</th></tr>
+                    <tr><td>TUCK8</td><td>1</td></tr>
+                    <tr><td>TUCK16</td><td>2</td></tr>
+                    <tr><td>TUCK32</td><td>4</td></tr>
+                    <tr><td>TUCK64</td><td>8</td></tr>
+                </table>
+            </div>
+            <div style="flex: 1;">
+                <pre>PUSH16 0xDEAD
+TUCK8</pre>
+
+                <p style="text-align: center; font-size: 48px;">&#8681;</p>
+
+                <table style="width: 100%;">
+                    <tr><td>PUSH16 (<code>1 00000 01</code>)</td><td>0xDE</td><td>0xAD</td></tr>
+                    <tr><td colspan="3">TUCK8 (<code>0 00011 00</code>)</td></tr>
+                </table>
+
+                <p style="text-align: center; font-size: 48px;">&#8681;</p>
+
+                <table style="width: 100%;">
+                    <tr><th>STACK HEAD (<code>SP = 3</code>)</th></tr>
+                    <tr><td>0xAD</td></tr>
+                    <tr><td>0xDE</td></tr>
+                    <tr><td>0xAD</td></tr>
+                    <tr><th>STACK BASE</th></tr>
+                </table>
+            </div>
+        </div>
+
+        <p style="text-align: center;">
+            <a href="https://github.com/linkdd/yavm/blob/master/src/stack/tuck.c">Source code</a>
+        </p>
+
+        <h2></h2>
+
+        <p><a href="index.html">Back to index</a></p>
     </body>
 </html>
