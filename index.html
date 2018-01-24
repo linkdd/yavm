@@ -9,6 +9,7 @@
             }
 
             body {
+                font-family: sans-serif;
                 background-color: white;
                 width: 90%;
                 padding: 25px;
@@ -25,27 +26,52 @@
             }
 
             pre, code {
-                background-color: #EFEFEF;
+                background-color: #EFEFFF;
                 color: red;
+                padding: 5px;
             }
 
             pre.code {
                 margin-left: 15px;
-                padding: 5px;
                 border-radius: 2px;
                 box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.24);
+                transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            }
+
+            pre.code:hover {
+                box-shadow: 0px 14px 28px rgba(0, 0, 0, 0.48);
             }
 
             table {
                 border-collapse: collapse;
                 text-align: center;
                 border-radius: 2px;
-                box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.24);1
+                box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.24);
+                transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
             }
 
+            table:hover {
+                box-shadow: 0px 14px 28px rgba(0, 0, 0, 0.48);
+            }
             th, td {
                 border: 1px solid rgba(0, 0, 0, 0.12);
                 padding: 10px;
+            }
+
+            th {
+                background-color: #EFFFEF;
+            }
+            tr:hover {
+                background-color: #EFEFEF;
+            }
+            a {
+                color: blue;
+                text-decoration: none;
+            }
+
+            a:hover {
+                font-weight: bold;
+                font-style: italic;
             }
         </style>
     </head>
@@ -142,7 +168,7 @@ INT</pre>
             <tr><td><code>(u)int32_t</code></td><td>An (unsigned) integer type capable of storing 32 bits</td><td>4</td></tr>
             <tr><td><code>(u)int64_t</code></td><td>An (unsigned) integer type capable of storing 64 bits</td><td>8</td></tr>
             <tr><td><code>(u)intptr_t</code></td><td>An (unsigned) integer type capable of storing any pointer</td><td>Architecture dependent</td></tr>
-            <tr><td><code>bool</code></td><td>boolean type with values <code>false</code> and <code>true defined</code></td><td>1</td></tr>
+            <tr><td><code>bool</code></td><td>boolean type with values <code>false</code> and <code>true</code> defined</td><td>1</td></tr>
         </table>
 
         <p><b>NB:</b> Using the C headers <code>stdlib.h</code> and <code>string.h</code> we are able to use the
@@ -178,5 +204,8 @@ INT</pre>
             <li><a href="jump.html">4 instructions for jumping</a></li>
             <li><a href="function-call.html">4 instructions dedicated to function calls</a></li>
         </ul>
+
+        <p>For more informations about the structure of the interpreter, see
+        <a href="interpreter.html">this page</a>.</p>
     </body>
 </html>
