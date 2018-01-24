@@ -124,6 +124,49 @@ INT</pre>
             </tr>
         </table>
 
+        <p>Internally, the interpreter have 2 registers (not exposed to the user):<p>
+
+        <ul>
+            <li>IP (Instruction Pointer): determines the current instruction being executed</li>
+            <li>SP (Stack Pointer): determines where to push the next value on the stack</li>
+        </ul>
+
+        <p><b>NB: Using the C headers <code>stdlib.h</code>code>, <code>stdint.h</code> and <code>stdbool.h</code>,
+        we have access to the following types:</b>
+
+        <table>
+            <tr><th>Type</th><th>Description</th><th>Bytes</th></tr>
+            <tr><td><code>size_t</code></td><td>An (unsigned) integer type capable of storing a memory size (ie. with <code>sizeof()</code>)</td><td>Architecture dependent</td></tr>
+            <tr><td><code>(u)int8_t</code></td><td>An (unsigned) integer type capable of storing 8 bits</td><td>1</td></tr>
+            <tr><td><code>(u)int16_t</code></td><td>An (unsigned) integer type capable of storing 16 bits</td><td>2</td></tr>
+            <tr><td><code>(u)int32_t</code></td><td>An (unsigned) integer type capable of storing 32 bits</td><td>4</td></tr>
+            <tr><td><code>(u)int64_t</code></td><td>An (unsigned) integer type capable of storing 64 bits</td><td>8</td></tr>
+            <tr><td><code>(u)intptr_t</code></td><td>An (unsigned) integer type capable of storing any pointer</td><td>Architecture dependent</td></tr>
+            <tr><td><code>bool</code></td><td>boolean type with values <code>false</code> and <code>true defined</code></td><td>1</td></tr>
+        </table>
+
+        <p><b>NB: Using the C headers <code>stdlib.h</code> and <code>string.h</code> we are able to use the
+        following functions:</b>
+
+        <ul>
+            <li>
+                <a href="http://manpagesfr.free.fr/man/man3/malloc.3.html">calloc</a>:
+                to allocate memory <b>and</b> initialize it to <code>0</code>
+            </li>
+            <li>
+                <a href="http://manpagesfr.free.fr/man/man3/malloc.3.html">realloc</a>:
+                to resize an already allocated memory area
+            </li>
+            <li>
+                <a href="http://manpagesfr.free.fr/man/man3/memcpy.3.html">memcpy</a>:
+                to copy memory (useful for stack manipulation)
+            </li>
+            <li>
+                <a href="http://manpagesfr.free.fr/man/man3/memcmp.3.html">memcmp</a>:
+                to compare two memory areas
+            </li>
+        </ul>
+
         <p>For the complete list of instructions and what they do:</p>
 
         <ul>
