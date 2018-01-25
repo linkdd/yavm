@@ -4,7 +4,8 @@
 int cmp8(instruction_t *instr, stack_t *stack)
 {
     int bytes = 0;
-    uint8_t val1 = 0, val2 = 0, result = 0;
+    uint8_t val1 = 0, val2 = 0;
+    int8_t result = 0;
 
     if (instr->has_operand)
     {
@@ -43,7 +44,8 @@ int cmp8(instruction_t *instr, stack_t *stack)
 int cmp16(instruction_t *instr, stack_t *stack)
 {
     int bytes = 0;
-    uint16_t val1 = 0, val2 = 0, result = 0;
+    uint16_t val1 = 0, val2 = 0;
+    int8_t result = 0;
 
     if (instr->has_operand)
     {
@@ -74,7 +76,7 @@ int cmp16(instruction_t *instr, stack_t *stack)
     }
 
     memcpy(stack->base + stack->sp, &result, sizeof(result));
-    stack->sp += 2;
+    stack->sp += 1;
 
     return bytes;
 }
@@ -82,7 +84,8 @@ int cmp16(instruction_t *instr, stack_t *stack)
 int cmp32(instruction_t *instr, stack_t *stack)
 {
     int bytes = 0;
-    uint32_t val1 = 0, val2 = 0, result = 0;
+    uint32_t val1 = 0, val2 = 0;
+    int8_t result = 0;
 
     if (instr->has_operand)
     {
@@ -113,7 +116,7 @@ int cmp32(instruction_t *instr, stack_t *stack)
     }
 
     memcpy(stack->base + stack->sp, &result, sizeof(result));
-    stack->sp += 4;
+    stack->sp += 1;
 
     return bytes;
 }
@@ -121,7 +124,8 @@ int cmp32(instruction_t *instr, stack_t *stack)
 int cmp64(instruction_t *instr, stack_t *stack)
 {
     int bytes = 0;
-    uint64_t val1 = 0, val2 = 0, result = 0;
+    uint64_t val1 = 0, val2 = 0;
+    int8_t result = 0;
 
     if (instr->has_operand)
     {
@@ -152,7 +156,7 @@ int cmp64(instruction_t *instr, stack_t *stack)
     }
 
     memcpy(stack->base + stack->sp, &result, sizeof(result));
-    stack->sp += 8;
+    stack->sp += 1;
 
     return bytes;
 }
