@@ -1,7 +1,7 @@
 #include <yavm/instruction.h>
 #include <string.h>
 
-int rol8(instruction_t *instr, stack_t *stack)
+int ror8(instruction_t *instr, stack_t *stack)
 {
     int bytes = 0;
     uint8_t val = 0, shifted, rot_bits, result = 0;
@@ -32,7 +32,7 @@ int rol8(instruction_t *instr, stack_t *stack)
     return bytes;
 }
 
-int rol16(instruction_t *instr, stack_t *stack)
+int ror16(instruction_t *instr, stack_t *stack)
 {
     int bytes = 0;
     uint16_t val = 0, shifted, rot_bits, result = 0;
@@ -63,7 +63,7 @@ int rol16(instruction_t *instr, stack_t *stack)
     return bytes;
 }
 
-int rol32(instruction_t *instr, stack_t *stack)
+int ror32(instruction_t *instr, stack_t *stack)
 {
     int bytes = 0;
     uint32_t val = 0, shifted, rot_bits, result = 0;
@@ -94,7 +94,7 @@ int rol32(instruction_t *instr, stack_t *stack)
     return bytes;
 }
 
-int rol64(instruction_t *instr, stack_t *stack)
+int ror64(instruction_t *instr, stack_t *stack)
 {
     int bytes = 0;
     uint64_t val = 0, shifted, rot_bits, result = 0;

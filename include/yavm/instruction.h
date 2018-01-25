@@ -4,7 +4,7 @@
 #include <yavm/stack.h>
 #include <stdint.h>
 
-#define NB_INSTRUCTION      32
+#define NB_INSTRUCTIONS     32
 #define INSTR_SIZE_8        0
 #define INSTR_SIZE_16       1
 #define INSTR_SIZE_32       2

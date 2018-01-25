@@ -82,6 +82,7 @@ void vm_step(vm_t *vm)
             instruction_t *instr = vm->prog.code + vm->prog.ip;
             bytes += do_instruction(instr, &(vm->stack));
             vm->prog.ip += bytes;
+        }
     }
 }
 
@@ -108,7 +109,7 @@ program_t *program_new_from_file(FILE *fin)
 
     fseek(fin, 0, SEEK_END);
     sz = ftell(fin);
-    rewing(fin);
+    rewind(fin);
 
     mem = calloc(sz, sizeof(instruction_t));
 

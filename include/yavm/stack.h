@@ -14,4 +14,6 @@ struct stack_s
     uintptr_t sp;
 };
 
+void stack_resize(stack_t *stack);
+
 #endif /* __YAVM_STACK_H */
