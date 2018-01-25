@@ -2,6 +2,7 @@
 #include <yavm/stack/instructions.h>
 #include <yavm/binary/instructions.h>
 #include <yavm/integer/instructions.h>
+#include <yavm/comparison/instructions.h>
 
 static const ihandler_t handlers[NB_INSTRUCTIONS][4] = {
     /* STACK */
@@ -28,7 +29,17 @@ static const ihandler_t handlers[NB_INSTRUCTIONS][4] = {
     {mod8,    mod16,    mod32,    mod64},
     {pow8,    pow16,    pow32,    pow64},
     {inc8,    inc16,    inc32,    inc64},
-    {dec8,    dec16,    dec32,    dec64}
+    {dec8,    dec16,    dec32,    dec64},
+    /* FIXED POINT */
+    {NULL,    NULL,     NULL,     NULL},
+    {NULL,    NULL,     NULL,     NULL},
+    {NULL,    NULL,     NULL,     NULL},
+    {NULL,    NULL,     NULL,     NULL},
+    {NULL,    NULL,     NULL,     NULL},
+    {NULL,    NULL,     NULL,     NULL},
+    {NULL,    NULL,     NULL,     NULL},
+    /* COMPARISON */
+    {cmp8,    cmp16,    cmp32,    cmp64}
 };
 
 int do_instruction(instruction_t *instr, stack_t *stack)
