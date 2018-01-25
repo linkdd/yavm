@@ -1,0 +1,456 @@
+<html>
+    <head>
+        <title>YAVM - Yet Another Virtual Machine - Binary Arithmetic Instructions</title>
+        <meta charset="utf-8" />
+        <link rel="stylesheet" media="all" href="style.css" />
+    </head>
+    <body>
+        <h1>Yet Another Virtual Machine - Binary Arithmetic Instructions</h1>
+
+        <p><a href="index.html">Back to index</a></p>
+
+        <h2>ADD8, ADD16, ADD32, ADD64</h2>
+
+        <div style="display: flex;">
+            <div style="flex: 3">
+                <p><b>OPCODE:</b> <code>01110</code></p>
+
+                <ul>
+                    <li>If the flag <code>has operand</code> is set:
+                        <ul>
+                            <li>read two times <a href="#addX">X</a> byte(s) following the instruction</li>
+                            <li>increment the value of the <code>IP</code> register by <code> 2 * <a href="#addX">X</a></code></li>
+                        </ul>
+                    </li>
+                    <li>Else:
+                        <ul>
+                            <li>read two times <a href="#addX">X</a> byte(s) at the address <code>SB + SP - 2 * <a href="#addX">X</a></code></li>
+                            <li>decrement the value of the <code>SP</code> register by <code>2 * <a href="#addX">X</a></code></li>
+                        </ul>
+                    </li>
+                    <li>calculate <code>value1 + value2</code></li>
+                    <li>copy the <a href="#addX">X</a> bytes of the result at the address <code>SB + SP</code> where
+                    <code>SB</code> is the address of the stack base, and <code>SP</code>
+                    the stack pointer register</li>
+                    <li>increment the value of the <code>SP</code> register by <a href="#addX">X</a></li>
+                </ul>
+
+                <table id="addX">
+                    <tr><th>Instruction</th><th>Value for X</th></tr>
+                    <tr><td>ADD8</td><td>1</td></tr>
+                    <tr><td>ADD16</td><td>2</td></tr>
+                    <tr><td>ADD32</td><td>4</td></tr>
+                    <tr><td>ADD64</td><td>8</td></tr>
+                </table>
+            </div>
+            <div style="flex: 1;">
+                <pre>ADD8 22 20</pre>
+
+                <p style="text-align: center; font-size: 48px;">&#8681;</p>
+
+                <table style="width: 100%;"><tr><td>ADD8 (<code>1 01110 00</code>)</td><td>22</td><td>20</td></tr></table>
+
+                <p style="text-align: center; font-size: 48px;">&#8681;</p>
+
+                <table style="width: 100%;">
+                    <tr><th>STACK HEAD (<code>SP = 1</code>)</th></tr>
+                    <tr><td>42</td></tr>
+                    <tr><th>STACK BASE</th></tr>
+                </table>
+            </div>
+        </div>
+
+        <p style="text-align: center;">
+            <a href="https://github.com/linkdd/yavm/blob/master/src/integer/add.c">Source code</a>
+        </p>
+
+        <h2>SUB8, SUB16, SUB32, SUB64</h2>
+
+        <div style="display: flex;">
+            <div style="flex: 3">
+                <p><b>OPCODE:</b> <code>01111</code></p>
+
+                <ul>
+                    <li>If the flag <code>has operand</code> is set:
+                        <ul>
+                            <li>read two times <a href="#subX">X</a> byte(s) following the instruction</li>
+                            <li>increment the value of the <code>IP</code> register by <code> 2 * <a href="#subX">X</a></code></li>
+                        </ul>
+                    </li>
+                    <li>Else:
+                        <ul>
+                            <li>read two times <a href="#subX">X</a> byte(s) at the address <code>SB + SP - 2 * <a href="#subX">X</a></code></li>
+                            <li>decrement the value of the <code>SP</code> register by <code>2 * <a href="#subX">X</a></code></li>
+                        </ul>
+                    </li>
+                    <li>calculate <code>value1 - value2</code></li>
+                    <li>copy the <a href="#subX">X</a> bytes of the result at the address <code>SB + SP</code> where
+                    <code>SB</code> is the address of the stack base, and <code>SP</code>
+                    the stack pointer register</li>
+                    <li>increment the value of the <code>SP</code> register by <a href="#subX">X</a></li>
+                </ul>
+
+                <table id="subX">
+                    <tr><th>Instruction</th><th>Value for X</th></tr>
+                    <tr><td>SUB8</td><td>1</td></tr>
+                    <tr><td>SUB16</td><td>2</td></tr>
+                    <tr><td>SUB32</td><td>4</td></tr>
+                    <tr><td>SUB64</td><td>8</td></tr>
+                </table>
+            </div>
+            <div style="flex: 1;">
+                <pre>SUB8 62 20</pre>
+
+                <p style="text-align: center; font-size: 48px;">&#8681;</p>
+
+                <table style="width: 100%;"><tr><td>SUB8 (<code>1 01111 00</code>)</td><td>62</td><td>20</td></tr></table>
+
+                <p style="text-align: center; font-size: 48px;">&#8681;</p>
+
+                <table style="width: 100%;">
+                    <tr><th>STACK HEAD (<code>SP = 1</code>)</th></tr>
+                    <tr><td>42</td></tr>
+                    <tr><th>STACK BASE</th></tr>
+                </table>
+            </div>
+        </div>
+
+        <p style="text-align: center;">
+            <a href="https://github.com/linkdd/yavm/blob/master/src/integer/sub.c">Source code</a>
+        </p>
+
+        <h2>MUL8, MUL16, MUL32, MUL64</h2>
+
+        <div style="display: flex;">
+            <div style="flex: 3">
+                <p><b>OPCODE:</b> <code>10000</code></p>
+
+                <ul>
+                    <li>If the flag <code>has operand</code> is set:
+                        <ul>
+                            <li>read two times <a href="#mulX">X</a> byte(s) following the instruction</li>
+                            <li>increment the value of the <code>IP</code> register by <code> 2 * <a href="#mulX">X</a></code></li>
+                        </ul>
+                    </li>
+                    <li>Else:
+                        <ul>
+                            <li>read two times <a href="#mulX">X</a> byte(s) at the address <code>SB + SP - 2 * <a href="#mulX">X</a></code></li>
+                            <li>decrement the value of the <code>SP</code> register by <code>2 * <a href="#mulX">X</a></code></li>
+                        </ul>
+                    </li>
+                    <li>calculate <code>value1 * value2</code></li>
+                    <li>copy the <a href="#mulX">X</a> bytes of the result at the address <code>SB + SP</code> where
+                    <code>SB</code> is the address of the stack base, and <code>SP</code>
+                    the stack pointer register</li>
+                    <li>increment the value of the <code>SP</code> register by <a href="#mulX">X</a></li>
+                </ul>
+
+                <table id="mulX">
+                    <tr><th>Instruction</th><th>Value for X</th></tr>
+                    <tr><td>MUL8</td><td>1</td></tr>
+                    <tr><td>MUL16</td><td>2</td></tr>
+                    <tr><td>MUL32</td><td>4</td></tr>
+                    <tr><td>MUL64</td><td>8</td></tr>
+                </table>
+            </div>
+            <div style="flex: 1;">
+                <pre>MUL8 21 2</pre>
+
+                <p style="text-align: center; font-size: 48px;">&#8681;</p>
+
+                <table style="width: 100%;"><tr><td>MUL8 (<code>1 10000 00</code>)</td><td>21</td><td>2</td></tr></table>
+
+                <p style="text-align: center; font-size: 48px;">&#8681;</p>
+
+                <table style="width: 100%;">
+                    <tr><th>STACK HEAD (<code>SP = 1</code>)</th></tr>
+                    <tr><td>42</td></tr>
+                    <tr><th>STACK BASE</th></tr>
+                </table>
+            </div>
+        </div>
+
+        <p style="text-align: center;">
+            <a href="https://github.com/linkdd/yavm/blob/master/src/integer/mul.c">Source code</a>
+        </p>
+
+        <h2>DIV8, DIV16, DIV32, DIV64</h2>
+
+        <div style="display: flex;">
+            <div style="flex: 3">
+                <p><b>OPCODE:</b> <code>10001</code></p>
+
+                <ul>
+                    <li>If the flag <code>has operand</code> is set:
+                        <ul>
+                            <li>read two times <a href="#divX">X</a> byte(s) following the instruction</li>
+                            <li>increment the value of the <code>IP</code> register by <code> 2 * <a href="#divX">X</a></code></li>
+                        </ul>
+                    </li>
+                    <li>Else:
+                        <ul>
+                            <li>read two times <a href="#divX">X</a> byte(s) at the address <code>SB + SP - 2 * <a href="#divX">X</a></code></li>
+                            <li>decrement the value of the <code>SP</code> register by <code>2 * <a href="#divX">X</a></code></li>
+                        </ul>
+                    </li>
+                    <li>calculate <code>value1 / value2</code></li>
+                    <li>copy the <a href="#divX">X</a> bytes of the result at the address <code>SB + SP</code> where
+                    <code>SB</code> is the address of the stack base, and <code>SP</code>
+                    the stack pointer register</li>
+                    <li>increment the value of the <code>SP</code> register by <a href="#divX">X</a></li>
+                </ul>
+
+                <table id="divX">
+                    <tr><th>Instruction</th><th>Value for X</th></tr>
+                    <tr><td>DIV8</td><td>1</td></tr>
+                    <tr><td>DIV16</td><td>2</td></tr>
+                    <tr><td>DIV32</td><td>4</td></tr>
+                    <tr><td>DIV64</td><td>8</td></tr>
+                </table>
+            </div>
+            <div style="flex: 1;">
+                <pre>DIV8 84 2</pre>
+
+                <p style="text-align: center; font-size: 48px;">&#8681;</p>
+
+                <table style="width: 100%;"><tr><td>DIV8 (<code>1 10001 00</code>)</td><td>84</td><td>2</td></tr></table>
+
+                <p style="text-align: center; font-size: 48px;">&#8681;</p>
+
+                <table style="width: 100%;">
+                    <tr><th>STACK HEAD (<code>SP = 1</code>)</th></tr>
+                    <tr><td>42</td></tr>
+                    <tr><th>STACK BASE</th></tr>
+                </table>
+            </div>
+        </div>
+
+        <p style="text-align: center;">
+            <a href="https://github.com/linkdd/yavm/blob/master/src/integer/div.c">Source code</a>
+        </p>
+
+        <h2>MOD8, MOD16, MOD32, MOD64</h2>
+
+        <div style="display: flex;">
+            <div style="flex: 3">
+                <p><b>OPCODE:</b> <code>10010</code></p>
+
+                <ul>
+                    <li>If the flag <code>has operand</code> is set:
+                        <ul>
+                            <li>read two times <a href="#modX">X</a> byte(s) following the instruction</li>
+                            <li>increment the value of the <code>IP</code> register by <code> 2 * <a href="#modX">X</a></code></li>
+                        </ul>
+                    </li>
+                    <li>Else:
+                        <ul>
+                            <li>read two times <a href="#modX">X</a> byte(s) at the address <code>SB + SP - 2 * <a href="#modX">X</a></code></li>
+                            <li>decrement the value of the <code>SP</code> register by <code>2 * <a href="#modX">X</a></code></li>
+                        </ul>
+                    </li>
+                    <li>calculate <code>value1 % value2</code></li>
+                    <li>copy the <a href="#modX">X</a> bytes of the result at the address <code>SB + SP</code> where
+                    <code>SB</code> is the address of the stack base, and <code>SP</code>
+                    the stack pointer register</li>
+                    <li>increment the value of the <code>SP</code> register by <a href="#modX">X</a></li>
+                </ul>
+
+                <table id="modX">
+                    <tr><th>Instruction</th><th>Value for X</th></tr>
+                    <tr><td>MOD8</td><td>1</td></tr>
+                    <tr><td>MOD16</td><td>2</td></tr>
+                    <tr><td>MOD32</td><td>4</td></tr>
+                    <tr><td>MOD64</td><td>8</td></tr>
+                </table>
+            </div>
+            <div style="flex: 1;">
+                <pre>MOD8 20 8</pre>
+
+                <p style="text-align: center; font-size: 48px;">&#8681;</p>
+
+                <table style="width: 100%;"><tr><td>MOD8 (<code>1 10010 00</code>)</td><td>20</td><td>8</td></tr></table>
+
+                <p style="text-align: center; font-size: 48px;">&#8681;</p>
+
+                <table style="width: 100%;">
+                    <tr><th>STACK HEAD (<code>SP = 1</code>)</th></tr>
+                    <tr><td>4</td></tr>
+                    <tr><th>STACK BASE</th></tr>
+                </table>
+            </div>
+        </div>
+
+        <p style="text-align: center;">
+            <a href="https://github.com/linkdd/yavm/blob/master/src/integer/mod.c">Source code</a>
+        </p>
+
+        <h2>POW8, POW16, POW32, POW64</h2>
+
+        <div style="display: flex;">
+            <div style="flex: 3">
+                <p><b>OPCODE:</b> <code>10011</code></p>
+
+                <ul>
+                    <li>If the flag <code>has operand</code> is set:
+                        <ul>
+                            <li>read two times <a href="#powX">X</a> byte(s) following the instruction</li>
+                            <li>increment the value of the <code>IP</code> register by <code> 2 * <a href="#powX">X</a></code></li>
+                        </ul>
+                    </li>
+                    <li>Else:
+                        <ul>
+                            <li>read two times <a href="#powX">X</a> byte(s) at the address <code>SB + SP - 2 * <a href="#powX">X</a></code></li>
+                            <li>decrement the value of the <code>SP</code> register by <code>2 * <a href="#powX">X</a></code></li>
+                        </ul>
+                    </li>
+                    <li>calculate <code>value1 ** value2</code></li>
+                    <li>copy the <a href="#powX">X</a> bytes of the result at the address <code>SB + SP</code> where
+                    <code>SB</code> is the address of the stack base, and <code>SP</code>
+                    the stack pointer register</li>
+                    <li>increment the value of the <code>SP</code> register by <a href="#powX">X</a></li>
+                </ul>
+
+                <table id="powX">
+                    <tr><th>Instruction</th><th>Value for X</th></tr>
+                    <tr><td>POW8</td><td>1</td></tr>
+                    <tr><td>POW16</td><td>2</td></tr>
+                    <tr><td>POW32</td><td>4</td></tr>
+                    <tr><td>POW64</td><td>8</td></tr>
+                </table>
+            </div>
+            <div style="flex: 1;">
+                <pre>POW8 2 8</pre>
+
+                <p style="text-align: center; font-size: 48px;">&#8681;</p>
+
+                <table style="width: 100%;"><tr><td>POW8 (<code>1 10011 00</code>)</td><td>2</td><td>8</td></tr></table>
+
+                <p style="text-align: center; font-size: 48px;">&#8681;</p>
+
+                <table style="width: 100%;">
+                    <tr><th>STACK HEAD (<code>SP = 1</code>)</th></tr>
+                    <tr><td>256</td></tr>
+                    <tr><th>STACK BASE</th></tr>
+                </table>
+            </div>
+        </div>
+
+        <p style="text-align: center;">
+            <a href="https://github.com/linkdd/yavm/blob/master/src/integer/pow.c">Source code</a>
+        </p>
+
+        <h2>INC8, INC16, INC32, INC64</h2>
+
+        <div style="display: flex;">
+            <div style="flex: 3">
+                <p><b>OPCODE:</b> <code>10100</code></p>
+
+                <ul>
+                    <li>If the flag <code>has operand</code> is set:
+                        <ul>
+                            <li>read <a href="#incX">X</a> byte(s) following the instruction</li>
+                            <li>increment the value of the <code>IP</code> register by <a href="#incX">X</a></li>
+                        </ul>
+                    </li>
+                    <li>Else:
+                        <ul>
+                            <li>read times <a href="#not">X</a> byte(s) at the address <code>SB + SP - <a href="#andX">X</a></code></li>
+                            <li>decrement the value of the <code>SP</code> register by <a href="#andX">X</a></li>
+                        </ul>
+                    </li>
+                    <li>calculate <code>value + 1</code></li>
+                    <li>copy the <a href="#incX">X</a> bytes of the result at the address <code>SB + SP</code> where
+                    <code>SB</code> is the address of the stack base, and <code>SP</code>
+                    the stack pointer register</li>
+                    <li>increment the value of the <code>SP</code> register by <a href="#incX">X</a></li>
+                </ul>
+
+                <table id="incX">
+                    <tr><th>Instruction</th><th>Value for X</th></tr>
+                    <tr><td>INC8</td><td>1</td></tr>
+                    <tr><td>INC16</td><td>2</td></tr>
+                    <tr><td>INC32</td><td>4</td></tr>
+                    <tr><td>INC64</td><td>8</td></tr>
+                </table>
+            </div>
+            <div style="flex: 1;">
+                <pre>INC8 41</pre>
+
+                <p style="text-align: center; font-size: 48px;">&#8681;</p>
+
+                <table style="width: 100%;"><tr><td>INC8 (<code>1 10100 00</code>)</td><td>41</td></tr></table>
+
+                <p style="text-align: center; font-size: 48px;">&#8681;</p>
+
+                <table style="width: 100%;">
+                    <tr><th>STACK HEAD (<code>SP = 1</code>)</th></tr>
+                    <tr><td>42</td></tr>
+                    <tr><th>STACK BASE</th></tr>
+                </table>
+            </div>
+        </div>
+
+        <p style="text-align: center;">
+            <a href="https://github.com/linkdd/yavm/blob/master/src/integer/inc.c">Source code</a>
+        </p>
+
+        <h2>DEC8, DEC16, DEC32, DEC64</h2>
+
+        <div style="display: flex;">
+            <div style="flex: 3">
+                <p><b>OPCODE:</b> <code>10101</code></p>
+
+                <ul>
+                    <li>If the flag <code>has operand</code> is set:
+                        <ul>
+                            <li>read <a href="#decX">X</a> byte(s) following the instruction</li>
+                            <li>increment the value of the <code>IP</code> register by <a href="#decX">X</a></li>
+                        </ul>
+                    </li>
+                    <li>Else:
+                        <ul>
+                            <li>read times <a href="#not">X</a> byte(s) at the address <code>SB + SP - <a href="#andX">X</a></code></li>
+                            <li>decrement the value of the <code>SP</code> register by <a href="#andX">X</a></li>
+                        </ul>
+                    </li>
+                    <li>calculate <code>value - 1</code></li>
+                    <li>copy the <a href="#decX">X</a> bytes of the result at the address <code>SB + SP</code> where
+                    <code>SB</code> is the address of the stack base, and <code>SP</code>
+                    the stack pointer register</li>
+                    <li>increment the value of the <code>SP</code> register by <a href="#decX">X</a></li>
+                </ul>
+
+                <table id="decX">
+                    <tr><th>Instruction</th><th>Value for X</th></tr>
+                    <tr><td>DEC8</td><td>1</td></tr>
+                    <tr><td>DEC16</td><td>2</td></tr>
+                    <tr><td>DEC32</td><td>4</td></tr>
+                    <tr><td>DEC64</td><td>8</td></tr>
+                </table>
+            </div>
+            <div style="flex: 1;">
+                <pre>DEC8 43</pre>
+
+                <p style="text-align: center; font-size: 48px;">&#8681;</p>
+
+                <table style="width: 100%;"><tr><td>DEC8 (<code>1 10101 00</code>)</td><td>43</td></tr></table>
+
+                <p style="text-align: center; font-size: 48px;">&#8681;</p>
+
+                <table style="width: 100%;">
+                    <tr><th>STACK HEAD (<code>SP = 1</code>)</th></tr>
+                    <tr><td>42</td></tr>
+                    <tr><th>STACK BASE</th></tr>
+                </table>
+            </div>
+        </div>
+
+        <p style="text-align: center;">
+            <a href="https://github.com/linkdd/yavm/blob/master/src/integer/dec.c">Source code</a>
+        </p>
+
+        <h2></h2>
+
+        <p><a href="index.html">Back to index</a></p>
+    </body>
+</html>
