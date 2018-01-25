@@ -1,0 +1,86 @@
+<html>
+    <head>
+        <title>YAVM - Yet Another Virtual Machine - Comparison Instructions</title>
+        <meta charset="utf-8" />
+        <link rel="stylesheet" media="all" href="style.css" />
+    </head>
+    <body>
+        <h1>Yet Another Virtual Machine - Comparison Instructions</h1>
+
+        <p><a href="index.html">Back to index</a></p>
+
+        <h2>CMP8, CMP16, CMP32, CMP64</h2>
+
+        <div style="display: flex;">
+            <div style="flex: 3">
+                <p><b>OPCODE:</b> <code>11101</code></p>
+
+                <ul>
+                    <li>If the flag <code>has operand</code> is set:
+                        <ul>
+                            <li>read two times <a href="#cmpX">X</a> byte(s) following the instruction</li>
+                            <li>increment the value of the <code>IP</code> register by <code> 2 * <a href="#cmpX">X</a></code></li>
+                        </ul>
+                    </li>
+                    <li>Else:
+                        <ul>
+                            <li>read two times <a href="#cmpX">X</a> byte(s) at the address <code>SB + SP - 2 * <a href="#cmpX">X</a></code></li>
+                            <li>decrement the value of the <code>SP</code> register by <code>2 * <a href="#cmpX">X</a></code></li>
+                        </ul>
+                    </li>
+                    <li>if <code>value1</code> is less than <code>value2</code>:
+                    <ul><li>write the byte <code>-1</code> at the address <code>SB + SP</code> where</li></ul>
+                    </li>
+                    <li>if <code>value1</code> is greater than <code>value2</code>:
+                    <ul><li>write the byte <code>1</code> at the address <code>SB + SP</code> where</li></ul>
+                    </li>
+                    <li>if <code>value1</code> is equal to <code>value2</code>:
+                    <ul><li>write the byte <code>0</code> at the address <code>SB + SP</code> where</li></ul>
+                    </li>
+                    <code>SB</code> is the address of the stack base, and <code>SP</code>
+                    the stack pointer register</li>
+                    <li>increment the value of the <code>SP</code> register by <a href="#cmpX">X</a></li>
+                </ul>
+
+                <table id="cmpX">
+                    <tr><th>Instruction</th><th>Value for X</th></tr>
+                    <tr><td>CMP8</td><td>1</td></tr>
+                    <tr><td>CMP16</td><td>2</td></tr>
+                    <tr><td>CMP32</td><td>4</td></tr>
+                    <tr><td>CMP64</td><td>8</td></tr>
+                </table>
+            </div>
+            <div style="flex: 1;">
+                <pre>CMP8 4 5
+CMP8 5 4
+CMP8 5 5</pre>
+
+                <p style="text-align: center; font-size: 48px;">&#8681;</p>
+
+                <table style="width: 100%;">
+                    <tr><td>CMP8 (<code>1 11101 00</code>)</td><td>4</td><td>5</td></tr>
+                    <tr><td>CMP8 (<code>1 11101 00</code>)</td><td>5</td><td>4</td></tr>
+                    <tr><td>CMP8 (<code>1 11101 00</code>)</td><td>5</td><td>5</td></tr>
+                </table>
+
+                <p style="text-align: center; font-size: 48px;">&#8681;</p>
+
+                <table style="width: 100%;">
+                    <tr><th>STACK HEAD (<code>SP = 1</code>)</th></tr>
+                    <tr><td>0</td></tr>
+                    <tr><td>1</td></tr>
+                    <tr><td>-1</td></tr>
+                    <tr><th>STACK BASE</th></tr>
+                </table>
+            </div>
+        </div>
+
+        <p style="text-align: center;">
+            <a href="https://github.com/linkdd/yavm/blob/master/src/comparison/cmp.c">Source code</a>
+        </p>
+
+        <h2></h2>
+
+        <p><a href="index.html">Back to index</a></p>
+    </body>
+</html>
